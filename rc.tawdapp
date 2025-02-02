@@ -1,0 +1,28 @@
+#!/bin/bash
+
+product=tawd
+description="EEVS Server"
+
+# Aliases
+alias reboot="sudo reboot"
+alias shutdown="sudo shutdown"
+alias apt="sudo apt"
+alias systemctl="sudo systemctl"
+
+tput clear
+
+case "$TERM" in
+# fastfetch not compiled with imagemagick so this does not work
+#"xterm-kitty") fastfetch -c /etc/tawd-fastfetch.config.jsonc --logo /usr/share/pixmaps/tawd.png;;
+	"xterm"*) fastfetch -c /etc/tawd-fastfetch.config.jsonc;;
+	       *) fastfetch -c /etc/tawd-fastfetch.config.jsonc --logo /usr/share/pixmaps/tawd.ascii;; 
+esac
+
+cat /usr/share/doc/tawd/welcome.md  | \
+	sed -e "s/%description%/${description}/g"  | \
+	sed -e "s/%product%/${product}$/g" | \
+	sed -e 's/%hostname%/'$(hostname)'/g' | \
+	glow
+	
+	
+sudo update-issue

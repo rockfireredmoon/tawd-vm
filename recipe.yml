@@ -1,0 +1,313 @@
+# Generic recipe. Builds ISO images and various
+# virtual machines given just a few details and the location of a primary product debian package to install by default.
+#
+#
+
+---
+name: tawd-$version$
+
+# Properties can be used to adjust the behavior of the build. The build
+# system may pass these as Java system properties, maven configuration, or -P options
+# when the standalone compiler is being used. These properties are then resolved
+# using the variable syntax. 
+properties:
+
+  # Product
+  product: tawd
+
+  # The distribution to base on
+  distro: bookworm
+  
+  # The phase from which to obtain Naul apps
+  phase: continuous 
+
+  # The entity producing the image
+  publisher: Team TAW
+  
+  # Codename for entity produing the image
+  pubid: tawd
+
+  # Whether or not to deploy to cloud
+  cloud.deploy: false
+  
+  # Description of build (using two variables this way minimises Maven setup)
+  description: "A server for Earth Eternal Server Valkal's Shadow"
+  
+  # Where to place images when output to directory
+  build.outputDirectory: artifacts
+  
+  # The mirror to retrieve packages from for BUILDING (not 
+  # baked into image)
+  mirror: http://ftp.uk.debian.org/debian/
+    
+  # Some properties that are not strictly required, defined 
+  # here so they will not cause the build to fail if they cannot be
+  # resolved
+  
+  # A local APT proxy to use 
+  apt.proxy: {}
+  
+  # Number of retries to configure apt with 
+  apt.retries: 0
+
+  # Docker credentials
+  docker.username: UNSET
+  docker.password: UNSET
+
+  # The PGP key for tawd
+  key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      Version: GnuPG v1.4.5 (GNU/Linux)
+
+      mQENBGOP5J8BCADgSP3O7uCyQ/NBLcIALyppxbQeCFF48mZa+n9VIE3J3HFEI+af
+      TkTfF8FlhV4oBy2kQvnCz6HCPLxi7hb/ruG8E4dQUGXl3Z7vI144oJpXb4YCSsi6
+      DfPTvuLAgyNvF2KR1LI4SJzP1LoPjfvmcezbNVa+Wc3AqjX+P6eat4/yDZ3r67/X
+      iif9FOW+c/FQk2IvFQEiltAZPKwK//K8cgkMDROvZIwKlGYTrRkzLmssdhw0bbvK
+      f3Ph/+D+pzR/RcaxWVAx2SXJBwnma/J1xhJVPuwVQsrrKyvuR1UTvaXzxsv3zQNJ
+      xyFToSaoHjCg99CORn4s1EOpd4y9VZzrWC+jABEBAAG0SmhvbWU6ZW1lcmFsZC5p
+      Y2Vtb29uIE9CUyBQcm9qZWN0IDxob21lOmVtZXJhbGQuaWNlbW9vbkBidWlsZC5v
+      cGVuc3VzZS5vcmc+iQE+BBMBCAAoBQJnnhC3AhsDBQkILNwYBgsJCAcDAgYVCAIJ
+      CgsEFgIDAQIeAQIXgAAKCRD1gCVxOoN1MC/DCADctcaMmzaMR17AKZO4bm8ZD+7/
+      VcKv3lu6l+PXjHQ4U8M4jDYpOyiOI0FVNfJ/o3EdbxKB7k+oebGvwQc3I9DpkOjw
+      5UkqHWT2KwrbeLom8PHnRYyrkuF4vUDFRECQ+ouPs/sAOJeMqWS0m1FvqYHrD0ns
+      TsvL3n0EsegkXFuXG/kJ292JjGEF/6pXPPZBT164+vJ15vnUbMCWmmzvxLbCTxXA
+      TvS9SaboJKmsm20GHvMiTdmgTDKPXgw8YE1a8f7vXkQeEQOoccpE3R4kY7QhsHwX
+      qmlAD3AGo/QSFjb98Yksg7pb4QVr/30HG/N6JigI+Zvnvs/dBMB+NrNM6NKUiQIc
+      BBMBAgAGBQJjj+SfAAoJEM8Lkoze1k87J9kP/0LywKjr/SSEgj6Y4vr2/zc2hqOk
+      v2QsAU7riEcYqTUtoY3tf4oiH8CZdkhJ0O6KoiFsNfdKB6PsoZ2TA+xlOw5B1rup
+      qM0KQx4oqV3dtYt0f2Tyqv+ilIFOtVMFms4muk9uDhpy+GK+uWn/4d7b6mZImUmN
+      Xrp3XvdZQyL7M+x15NHR0vPP/8Aq6yKSKunTQCy7psS1ehw6CkvZB8Q/OjHlmO/2
+      to1t2mU5UIOlJmgHkgtuswYeDDnfLQ0eNCjqGI5CAv5eZQIvFcQL0iF32SoNLbVh
+      0TTnHz0awkWLzRA4U3iYbq0T1nn6T8jnorYQdoZVRLZXtPNqC1/y72jkZWauc1lj
+      X+M9GimsC1PrCozR+V7pi2BYPn5oUOr9/lGP/gsgprS48+CgBnVrZOjTBcTN/Crx
+      9vVS/ySI/cAGtUgaH+J1YpEkydCWhuPXQR+GtfMa4WzDjCc0HIdjtOhiRH3tQXQD
+      LVYircIZRAdpqtQCqPmAgbNaxvNSMuNOuxEFTohRO1y4ZyPq72c6zRjpDsu3L+66
+      SJZ10S88UmY7qUqBsGnMXRc+BeeEuDIbPBLxnprOSbLNZcYKibYq8cI4WAWOv8pj
+      BvWl7Fn7TyNHfUi1ZzQlOlHP7FrQv38TJAGo+/7tYqVXG1YQc3gbdkjhI/OmyfXF
+      6dPnUGqge1OUs5u2
+      =E97Z
+      -----END PGP PUBLIC KEY BLOCK-----
+publisher: $publisher$
+arch: $os.arch$
+repositories:
+- !apt
+  name: tawd
+  spec: deb http://download.opensuse.org/repositories/home:/emerald.icemoon/Debian_11/ /
+  key: |
+    $key$
+   
+components:
+  default:  &default
+    !vmbuild
+    name: tawd
+    description: $description$
+    bootstrapMirror: $mirror$
+    buildMirror: $mirror$
+    distribution: $distro$
+    adminUsername: tawd
+    adminPassword: '*'
+    outputs:  &defaultOutputs
+    - !directory
+      renamePattern: 'tawd-vm-%c-$version$.%x' 
+      overwrite: true
+    bootsplash: splash-tawd.png
+    net: bridged
+    hostname: tawd
+    proxy: $apt.proxy$
+    debug: true
+    packages: &defaultPackages
+      names: [redis,tawd,tawd-data-valkals-shadow,tawd-client-assets-valkals-shadow,ufw,openssh-server,openssh-client,./glow_1.5.1_amd64.deb,./fastfetch-linux-amd64.deb]
+      build: [tawd]
+      image: [tawd]
+    guestPackages: true
+    files:
+      create:
+      - path: /usr/share/doc/tawd
+      copy:
+      - source: update-issue
+        target: /usr/bin/update-issue
+        permissions: a+rx
+      - source: welcome.md
+        target: /usr/share/doc/tawd/welcome.md
+      - source: rc.tawdapp
+        target: /etc/rc.tawdapp
+      - source: sudoers.tawd
+        target: /etc/sudoers.d/tawd
+      - source: tawd-vm-status
+        target: /usr/bin/tawd-vm-status
+        permissions: a+rx
+      - source: tawd-fastfetch.config.jsonc
+        target: /etc/tawd-fastfetch.config.jsonc
+      - source: tawd.ansi
+        target: /usr/share/pixmaps/tawd.ansi
+      - source: tawd.ascii
+        target: /usr/share/pixmaps/tawd.ascii
+      - source: tawd.png
+        target: /usr/share/pixmaps/tawd.png
+    commands:
+      install: |
+        passwd --expire tawd
+        /usr/bin/update-issue "Welcome to $description$. The default username is 'tawd' with no password. You will be asked to change this on first login. \\n\n"
+        echo "source /etc/rc.tawdapp"  >> /home/tawd/.bashrc
+    partitions:
+      - name: root       
+        size: 15000
+      - name: boot
+        type: ext2
+        size: 2048
+      - name: swap
+        size: 512
+        
+  #===================================================================================
+  # Debian Live - The Live/Installer ISO
+  #===================================================================================       
+  debianlive:
+    !debianlive
+    <<: *default
+    autoInstallGrubIfOnlyOS: true
+    askForRootPassword: false
+    askForUserAccount: false
+    banner: banner-tawd.png
+    buildMirror: 
+    proxyMode: http
+    binaryImage: iso
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$]
+        
+  #===================================================================================
+  # Bootstrap VZ - Outputs to a number of different sub-types (targets)
+  #===================================================================================
+  bootstrapvz: &bootstrapvz 
+    !bootstrapvz
+    <<: *default
+    #source: https://github.com/brett-smith/bootstrap-vz.git
+    #source: /home/tanktarta/Documents/Git/bootstrap-vz
+    retries: $apt.retries$
+    show: true
+    recovery: true
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$]      
+      
+  docker:
+    !bootstrapvz
+    <<: *bootstrapvz
+    name: $pubid$/tawd:v$version$_$timestamp.yyyy$$timestamp.MM$$timestamp.dd$ 
+    target: 
+      !docker
+      dockerfile: |
+        EXPOSE 80
+        EXPOSE 6379
+        EXPOSE 4300
+        EXPOSE 4242
+        ENTRYPOINT tawd -C
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$,systemd]
+    outputs:
+      - !dockerHub
+        enabled: $cloud.deploy$
+        username: "$docker.username$"
+        password: "$docker.password$"
+        tags:
+          - tawd/tawd:latest
+    
+  virtualbox: &virtualbox 
+    !bootstrapvz
+    <<: *bootstrapvz
+    proxy: 
+    target:
+      !virtualbox
+      {}
+      
+  kvm: 
+    !bootstrapvz
+    <<: *bootstrapvz 
+    target:
+      !kvm
+      {}
+      
+  ova: 
+    !bootstrapvz
+    <<: *bootstrapvz 
+    proxy: 
+    target:
+      !ova
+      ovf: default.ovf
+      
+  vagrant: 
+    !bootstrapvz
+    <<: *virtualbox
+    proxy:  
+    target:
+      !virtualbox
+      portable: true
+      backing: vmdk
+      
+  hyperv: 
+    !bootstrapvz
+    <<: *bootstrapvz 
+    packages:
+      <<: *defaultPackages
+      names: [$components.bootstrapvz.packages.names$,hyperv-daemons]
+    target:
+      !hyperv
+      {}
+     
+  #===================================================================================
+  # Cloudy VMs. These do NOT set a root password, but instead create an admin
+  # user. 
+  #===================================================================================
+  cloudyvm: &cloudyvm 
+    !bootstrapvz
+    <<: *bootstrapvz 
+    show: false
+    recovery: false
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$]
+      
+  oracle: 
+    !bootstrapvz
+    <<: *cloudyvm 
+    target:
+      !oracle
+      {}
+      
+  gce:
+    !bootstrapvz
+    <<: *cloudyvm
+    target:
+      !gce
+      repositorySuffix: bookworm-stable
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$]
+    
+  ec2:
+    !bootstrapvz
+    <<: *cloudyvm
+    target:
+      !ec2
+      backing: ebs
+      
+  azure:
+    !bootstrapvz
+    <<: *cloudyvm
+    proxy:  
+    target:
+      !azure
+      {}
+    outputs:
+    - !directory
+      renamePattern: 'tawd-%c-$version$.%x' 
+      overwrite: true
+      
+  kvmcloud: 
+    !bootstrapvz
+    <<: *bootstrapvz 
+    target:
+      !kvm
+      {}
+      

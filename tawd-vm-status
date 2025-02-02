@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$1" = "tawd" ] ; then
+	if sudo systemctl is-active -q tawd ; then
+		echo "Active"
+	else
+		echo "Inactive"
+	fi
+elif [ "$1" = "redis" ] ; then
+	if sudo systemctl is-active -q redis ; then
+		echo "Active"
+	else
+		echo "Inactive"
+	fi
+fi
+
