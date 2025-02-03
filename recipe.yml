@@ -189,7 +189,7 @@ components:
   docker:
     !bootstrapvz
     <<: *bootstrapvz
-    name: emeraldeicemoon/tawd:v$version$_$timestamp.yyyy$$timestamp.MM$$timestamp.dd$ 
+    name: emeraldicemoon/tawd:v$version$_$timestamp.yyyy$$timestamp.MM$$timestamp.dd$ 
     target: 
       !docker
       dockerfile: |
@@ -197,7 +197,7 @@ components:
         EXPOSE 6379
         EXPOSE 4300
         EXPOSE 4242
-        ENTRYPOINT tawd -C
+        ENTRYPOINT redis-server --daemonize yes && tawd -C
     packages:
       <<: *defaultPackages
       names: [$components.default.packages.names$,systemd]
@@ -207,7 +207,7 @@ components:
         username: "$docker.username$"
         password: "$docker.password$"
         tags:
-          - emeraldeicemoon/tawd:latest
+          - emeraldicemoon/tawd:latest
     
   virtualbox: &virtualbox 
     !bootstrapvz
