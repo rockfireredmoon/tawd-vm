@@ -1,6 +1,10 @@
 # TAWD Virtual Machines
 
-This project makes use of a tool called [vmmmake](https://github.com/jadaptive/vmmake) to build all-in-one virtual machines that contain everything you need to run an [Earth Eternal](https://github.com/rockfireredmoon/iceee) server game, such as [Earth Eternal, Valkal's Shadow]().
+This project makes use of a tool called [vmmmake](https://github.com/jadaptive/vmmake) to build all-in-one virtual machines that contain everything you need to run an [Earth Eternal](https://github.com/rockfireredmoon/iceee) server game, such as [Earth Eternal, Valkal's Shadow](https://github.com/rockfireredmoon/iceee-data/tree/valkals_shadow).
+
+Logging in to to the VM, this is what you will see ...
+
+![](screenshot.png) 
 
 It contains ..
 
