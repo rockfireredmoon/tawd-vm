@@ -19,13 +19,26 @@ It is available for a number of different hypervisor platforms. Your provider sh
  * OVA (for VirtualBox, VMWare and others)
  * HyperV (Windows)
  * Docker
- * Generic ISO image (Debian Installer)
+ * Generic ISO image (Debian Installer) may also be installed on dedicated 64-bit AMD/Intel hardware
  
 The created VMs will also be easily updateable, both the operating system, the tawd server and game and client assets. Uses the familiar `apt` command.
+
+## Obtaining
+
+| Platform | File Type | Download |
+| -------- | --------- | -------- |
+| VirtualBox and Others | OVA       | [tawd-vm-ova-0.9.0.ova](https://files.theanubianwar.com/vms/tawd-vm-ova-0.9.0.ova) |
+| Any Hypervisor or Real Hardware | ISO       | [tawd-vm-debianlive-0.9.0.iso](https://files.theanubianwar.com/vms/tawd-vm-debianlive-0.9.0.iso)         |
+
  
 ## How To Use
  
 Simply download the appropriate image for your provider and follow their instructions. Once you have a running virtual machine, you manage it as any other Debian based server.
+
+ 1. Install and start your machine.
+ 1. Login as `tawd`, you will be prompted to create a VM login password. Keep this safe!
+ 1. Use `apt update` to check if there are any updates, and `apt upgrade` if there are.
+ 1. Use `eeaccount` to create your game administrator account. 
  
 For more instructions on maintaining a server (creating accounts, shard configuration and more), see [Running On A Server](https://github.com/rockfireredmoon/iceee/blob/master/Doc/SERVER.md) on the main project. 
  
