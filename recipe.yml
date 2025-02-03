@@ -24,9 +24,6 @@ properties:
   # The entity producing the image
   publisher: Team TAW
   
-  # Codename for entity produing the image
-  pubid: team-taw
-
   # Whether or not to deploy to cloud
   cloud.deploy: false
   
@@ -192,7 +189,7 @@ components:
   docker:
     !bootstrapvz
     <<: *bootstrapvz
-    name: $pubid$/tawd:v$version$_$timestamp.yyyy$$timestamp.MM$$timestamp.dd$ 
+    name: emeraldeicemoon/tawd:v$version$_$timestamp.yyyy$$timestamp.MM$$timestamp.dd$ 
     target: 
       !docker
       dockerfile: |
@@ -210,7 +207,7 @@ components:
         username: "$docker.username$"
         password: "$docker.password$"
         tags:
-          - team-taw/tawd:latest
+          - emeraldeicemoon/tawd:latest
     
   virtualbox: &virtualbox 
     !bootstrapvz

@@ -18,6 +18,7 @@ It is available for a number of different hypervisor platforms. Your provider sh
 
  * OVA (for VirtualBox, VMWare and others)
  * HyperV (Windows)
+ * KVM (Proxmox etc)
  * Docker
  * Generic ISO image (Debian Installer) may also be installed on dedicated 64-bit AMD/Intel hardware
  
@@ -25,11 +26,26 @@ The created VMs will also be easily updateable, both the operating system, the t
 
 ## Obtaining
 
+There are 2 classes of virtual machine available. Cloud provider oriented ones, and on-prem. Use the recommended type for your provider or hypervisor.
+
+### Cloud
+
+For Cloud images, either upload the image to your provider, or in the case of Docker, you can "pull" the machine directly from Docker Hub.
+
+| Platform | File Type | Download |
+| -------- | --------- | -------- |
+| Docker   | Cloud     | See project page [team-taw](https://hub.docker.com/repository/docker/emeraldicemoon/tawd) |
+
+### On-Prem
+
+On-prem images will generally involve you having your own Hypervisor software, although some cloud providers may provide ways to upload these images too.
+
 | Platform | File Type | Download |
 | -------- | --------- | -------- |
 | VirtualBox and Others | OVA       | [tawd-vm-ova-0.9.0.ova](https://files.theanubianwar.com/vms/tawd-vm-ova-0.9.0.ova) |
 | Any Hypervisor or Real Hardware | ISO       | [tawd-vm-debianlive-0.9.0.iso](https://files.theanubianwar.com/vms/tawd-vm-debianlive-0.9.0.iso)         |
-| HyperV | VHD (zipped) | [tawd-vm-hyperv-0.9.0.zip](https://files.theanubianwar.com/vms/tawd-vm-hyperv-0.9.0.vhd) |
+| HyperV | VHD (zipped) | [tawd-vm-hyperv-0.9.0.zip](https://files.theanubianwar.com/vms/tawd-vm-hyperv-0.9.0.zip) |
+| KVM (Proxmox etc) | RAW (bzip2) | [tawd-vm-kvm-0.9.0.bz2](https://files.theanubianwar.com/vms/tawd-vm-kvm-0.9.0.bz2) |
 
  
 ## How To Use
