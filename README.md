@@ -29,6 +29,7 @@ The created VMs will also be easily updateable, both the operating system, the t
 | -------- | --------- | -------- |
 | VirtualBox and Others | OVA       | [tawd-vm-ova-0.9.0.ova](https://files.theanubianwar.com/vms/tawd-vm-ova-0.9.0.ova) |
 | Any Hypervisor or Real Hardware | ISO       | [tawd-vm-debianlive-0.9.0.iso](https://files.theanubianwar.com/vms/tawd-vm-debianlive-0.9.0.iso)         |
+| HyperV | VHD (zipped) | [tawd-vm-hyperv-0.9.0.zip](https://files.theanubianwar.com/vms/tawd-vm-hyperv-0.9.0.vhd) |
 
  
 ## How To Use

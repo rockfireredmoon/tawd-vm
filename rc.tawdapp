@@ -1,7 +1,7 @@
 #!/bin/bash
 
 product=tawd
-description="EEVS Server"
+description="Game Server"
 
 # Aliases
 alias reboot="sudo reboot"

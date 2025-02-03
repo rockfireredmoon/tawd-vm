@@ -7,3 +7,5 @@ See [Project](https:/http://github.com/rockfire-redmoon/iceee/) for detailed hel
 
 If this is a brand new server, you'll need to setup some game accounts. See 
 [Game Accounts](https://github.com/rockfireredmoon/iceee/blob/master/Doc/ACCOUNTS.md).
+
+Game clients should run `spark.exe` with the argument `http://<ip-or-hostname>/Release/Current/EarthEternal.car`, where `ip-or-hostname` being the IP address or external hostname of this machine, visible above.

@@ -25,7 +25,7 @@ properties:
   publisher: Team TAW
   
   # Codename for entity produing the image
-  pubid: tawd
+  pubid: team-taw
 
   # Whether or not to deploy to cloud
   cloud.deploy: false
@@ -182,8 +182,6 @@ components:
   bootstrapvz: &bootstrapvz 
     !bootstrapvz
     <<: *default
-    #source: https://github.com/brett-smith/bootstrap-vz.git
-    #source: /home/tanktarta/Documents/Git/bootstrap-vz
     retries: $apt.retries$
     show: true
     recovery: true
@@ -208,11 +206,11 @@ components:
       names: [$components.default.packages.names$,systemd]
     outputs:
       - !dockerHub
-        enabled: $cloud.deploy$
+        enabled: true
         username: "$docker.username$"
         password: "$docker.password$"
         tags:
-          - tawd/tawd:latest
+          - team-taw/tawd:latest
     
   virtualbox: &virtualbox 
     !bootstrapvz
@@ -257,8 +255,7 @@ components:
       {}
      
   #===================================================================================
-  # Cloudy VMs. These do NOT set a root password, but instead create an admin
-  # user. 
+  # Cloudy VMs. 
   #===================================================================================
   cloudyvm: &cloudyvm 
     !bootstrapvz
@@ -269,13 +266,6 @@ components:
       <<: *defaultPackages
       names: [$components.default.packages.names$]
       
-  oracle: 
-    !bootstrapvz
-    <<: *cloudyvm 
-    target:
-      !oracle
-      {}
-      
   gce:
     !bootstrapvz
     <<: *cloudyvm
@@ -285,30 +275,4 @@ components:
     packages:
       <<: *defaultPackages
       names: [$components.default.packages.names$]
-    
-  ec2:
-    !bootstrapvz
-    <<: *cloudyvm
-    target:
-      !ec2
-      backing: ebs
-      
-  azure:
-    !bootstrapvz
-    <<: *cloudyvm
-    proxy:  
-    target:
-      !azure
-      {}
-    outputs:
-    - !directory
-      renamePattern: 'tawd-%c-$version$.%x' 
-      overwrite: true
-      
-  kvmcloud: 
-    !bootstrapvz
-    <<: *bootstrapvz 
-    target:
-      !kvm
-      {}
-      
+          
