@@ -1,6 +1,6 @@
 See [Project](https:/http://github.com/rockfire-redmoon/iceee/) for detailed help.
 
- * `apt` - Check for and apply OS updates
+ * `apt` - Check for and apply updates
  * `systemctl` - Control %description% and other services
  * `shutdown` or `reboot` - Shutdown or reboot the whole machine
  * `eeaccount` - Game account management

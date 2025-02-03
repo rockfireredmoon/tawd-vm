@@ -146,6 +146,7 @@ components:
         target: /usr/share/pixmaps/tawd.png
     commands:
       install: |
+        sed -i -e 's/HTTPListenPort=8080/HTTPListenPort=80/g' /etc/tawd/ServerConfig.txt
         passwd --expire tawd
         /usr/bin/update-issue "Welcome to $description$. The default username is 'tawd' with no password. You will be asked to change this on first login. \\n\n"
         echo "source /etc/rc.tawdapp"  >> /home/tawd/.bashrc
