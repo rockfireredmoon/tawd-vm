@@ -30,6 +30,9 @@ properties:
   # Description of build (using two variables this way minimises Maven setup)
   description: "A server for Earth Eternal Server Valkal's Shadow"
   
+  # Extra packages (for full vms)
+  extra.packages: "ufw,openssh-server,openssh-client,./glow_1.5.1_amd64.deb,./fastfetch-linux-amd64.deb"
+  
   # Where to place images when output to directory
   build.outputDirectory: artifacts
   
@@ -113,11 +116,11 @@ components:
     proxy: $apt.proxy$
     debug: true
     packages: &defaultPackages
-      names: [redis,tawd,tawd-data-valkals-shadow,tawd-client-assets-valkals-shadow,ufw,openssh-server,openssh-client,./glow_1.5.1_amd64.deb,./fastfetch-linux-amd64.deb]
+      names: [redis,tawd,tawd-data-valkals-shadow,tawd-client-assets-valkals-shadow]
       build: [tawd]
       image: [tawd]
     guestPackages: true
-    files:
+    files: &defaultFiles
       create:
       - path: /usr/share/doc/tawd
       copy:
@@ -169,9 +172,11 @@ components:
     buildMirror: 
     proxyMode: http
     binaryImage: iso
+    files:
+      <<: *defaultFiles
     packages:
       <<: *defaultPackages
-      names: [$components.default.packages.names$]
+      names: [$components.default.packages.names$,$extra.packages$]
         
   #===================================================================================
   # Bootstrap VZ - Outputs to a number of different sub-types (targets)
@@ -193,14 +198,15 @@ components:
     target: 
       !docker
       dockerfile: |
-        EXPOSE 80
+        EXPOSE 8080
         EXPOSE 6379
         EXPOSE 4300
         EXPOSE 4242
+        VOLUME /var/lib/redis /var/lib/tawd
         ENTRYPOINT redis-server --daemonize yes && tawd -C
     packages:
       <<: *defaultPackages
-      names: [$components.default.packages.names$,systemd]
+      names: [$components.default.packages.names$]
     outputs:
       - !dockerHub
         enabled: true
@@ -213,6 +219,11 @@ components:
     !bootstrapvz
     <<: *bootstrapvz
     proxy: 
+    files:
+      <<: *defaultFiles
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$,$extra.packages$]
     target:
       !virtualbox
       {}
@@ -220,6 +231,11 @@ components:
   kvm: 
     !bootstrapvz
     <<: *bootstrapvz 
+    files:
+      <<: *defaultFiles
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$,$extra.packages$]
     target:
       !kvm
       {}
@@ -228,6 +244,11 @@ components:
     !bootstrapvz
     <<: *bootstrapvz 
     proxy: 
+    files:
+      <<: *defaultFiles
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$,$extra.packages$]
     target:
       !ova
       ovf: default.ovf
@@ -235,7 +256,12 @@ components:
   vagrant: 
     !bootstrapvz
     <<: *virtualbox
-    proxy:  
+    proxy: 
+    files:
+      <<: *defaultFiles
+    packages:
+      <<: *defaultPackages
+      names: [$components.default.packages.names$,$extra.packages$] 
     target:
       !virtualbox
       portable: true
@@ -244,9 +270,11 @@ components:
   hyperv: 
     !bootstrapvz
     <<: *bootstrapvz 
+    files:
+      <<: *defaultFiles
     packages:
       <<: *defaultPackages
-      names: [$components.bootstrapvz.packages.names$,hyperv-daemons]
+      names: [$components.bootstrapvz.packages.names$,$extra.packages$,hyperv-daemons]
     target:
       !hyperv
       {}
@@ -266,10 +294,12 @@ components:
   gce:
     !bootstrapvz
     <<: *cloudyvm
+    files:
+      <<: *defaultFiles
+    packages:
+      <<: *defaultPackages
+      names: [$components.bootstrapvz.packages.names$,$extra.packages$,hyperv-daemons]
     target:
       !gce
       repositorySuffix: bookworm-stable
-    packages:
-      <<: *defaultPackages
-      names: [$components.default.packages.names$]
           
