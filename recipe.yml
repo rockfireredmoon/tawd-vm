@@ -238,7 +238,7 @@ components:
       names: [$components.default.packages.names$,$extra.packages$]
     target:
       !kvm
-      {}
+      backing: qcow2
       
   ova: 
     !bootstrapvz

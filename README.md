@@ -37,7 +37,7 @@ On-prem images will generally involve you having your own Hypervisor software, a
 | VirtualBox and Others | OVA       | [tawd-vm-ova-0.9.0.ova](https://files.theanubianwar.com/vms/tawd-vm-ova-0.9.0.ova) |
 | Any Hypervisor or Real Hardware | ISO       | [tawd-vm-debianlive-0.9.0.iso](https://files.theanubianwar.com/vms/tawd-vm-debianlive-0.9.0.iso)         |
 | HyperV | VHD (zipped) | [tawd-vm-hyperv-0.9.0.zip](https://files.theanubianwar.com/vms/tawd-vm-hyperv-0.9.0.zip) |
-| KVM (Linux, Proxmox etc) | RAW (bzip2) | [tawd-vm-kvm-0.9.0.bz2](https://files.theanubianwar.com/vms/tawd-vm-kvm-0.9.0.bz2) |
+| KVM (Linux, Proxmox etc) | QCOW2 | [tawd-vm-kvm-0.9.0.bz2](https://files.theanubianwar.com/vms/tawd-vm-kvm-0.9.0.bz2) |
 
 ### Cloud
 
@@ -46,7 +46,7 @@ For Cloud images, either upload the image to your provider, or in the case of Do
 | Platform | File Type | Download |
 | -------- | --------- | -------- |
 | Docker   | Container     | See project page [emeraldicemoon/tawd](https://hub.docker.com/repository/docker/emeraldicemoon/tawd) |
-| GCE   | Raw Disk (gzipped) | [tawd-vm-kvm-0.9.0.gz](https://files.theanubianwar.com/vms/tawd-vm-kvm-0.9.0.gz) |
+| GCE   | Raw Disk (gzipped) | [tawd-vm-gce-0.9.0.gz](https://files.theanubianwar.com/vms/tawd-vm-gce-0.9.0.gz) |
  
 ## How To Use
  
