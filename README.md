@@ -28,11 +28,11 @@ The created VMs will also be easily updateable, both the operating system, the t
 
 There are 2 classes of virtual machine available. Cloud provider oriented ones, and on-prem. Use the recommended type for your provider or hypervisor.
 
+Some of these files are compressed (zip, bzip or gzip). They expand to about 15GB, so ensure you have plenty of space before extracting them to import to your hypervisor.
+
 ### On-Prem
 
 On-prem images will generally involve you having your own Hypervisor software, although some cloud providers may provide ways to upload these images too.
-
-Some of these files are compressed (zip, bzip or gzip). They expand to about 15GB, so ensure you have plenty of space before extracting them to import to your hypervisor.
 
 | Platform | File Type | Download |
 | -------- | --------- | -------- |
