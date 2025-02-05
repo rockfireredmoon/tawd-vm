@@ -2,6 +2,12 @@
 
 product=tawd
 description="Game Server"
+hostname=$(ip route get 8.8.8.8| grep src| sed 's/.*src \(.* \)/\1/g'|cut -f1 -d ' ')
+port=$(grep "HTTPListenPort=" /etc/tawd/ServerConfig.txt|awk -F= '{ print $2 }'|awk '{ print $1 }')
+host="${hostname}"
+if [ "${port}" -ne 80 ] ; then
+    host="${hostname}:${port}"
+fi
 
 # Aliases
 alias reboot="sudo reboot"
@@ -20,8 +26,8 @@ esac
 
 cat /usr/share/doc/tawd/welcome.md  | \
 	sed -e "s/%description%/${description}/g"  | \
-	sed -e "s/%product%/${product}$/g" | \
-	sed -e 's/%hostname%/'$(hostname)'/g' | \
+	sed -e "s/%product%/${product}/g" | \
+	sed -e "s/%host%/${host}/g" | \
 	glow
 	
 	

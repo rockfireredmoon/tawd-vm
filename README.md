@@ -83,5 +83,15 @@ When publishing to Docker Hub, additional arguments must be passed for authentic
 
 ```
 vmmake -Pdocker.username=yourdockerusername -Pdocker.password=asecret -Pversion=0.9.0 \
-    --include=docker --workspace=/fast/cache/vmmake  recipe.yml
+    --include=docker --workspace=/fast/cache/vmmake recipe.yml
+```
+
+### All At Once
+
+You can buiuld all image types in one go if you like.
+
+```
+vmmake -X -Pversion=0.9.0 -Pdocker.username=yourdockerusername -Pdocker.password=asecret \
+    --include=ova,kvm,hyperv,docker,gce,debianlive \
+    --workspace=/fast/cache/vmmake recipe.yml 
 ```

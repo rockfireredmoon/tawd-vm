@@ -199,10 +199,9 @@ components:
       !docker
       dockerfile: |
         EXPOSE 8080
-        EXPOSE 6379
         EXPOSE 4300
         EXPOSE 4242
-        VOLUME /var/lib/redis /var/lib/tawd
+        VOLUME ["/var/lib/redis", "/var/lib/tawd" ]"
         ENTRYPOINT redis-server --daemonize yes && tawd -C
     packages:
       <<: *defaultPackages
